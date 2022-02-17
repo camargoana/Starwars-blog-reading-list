@@ -11,9 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			planets:[],
 			favorites:[],
 			list:[],
-			favorites:[{id:"film_1", name:"Item1"},{id:"film_2", name:"Item2"},{id:"film_3", name:"Item3"}],
-			currentItem: undefined,
-			
+			favorites:[],
+			currentItem: undefined
 		},
 
 		actions: {
@@ -34,6 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({
 					currentItem: body
 				});
+				console.log(store.favorites);
 			},
 			removecurrentitem: () => setStore({currentItem: undefined}),
 			getItems : async (resource) => {
@@ -47,15 +47,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const attribute = resource === "films" ? "result": "results";
 				const list = body[attribute];
+
 				if(resource === "films"){
 					const FilmName = ["Star Wars", "The Empire Strikes Back", "Return of the Jedi", "Ep1 The Phantom Menace"
 					, "Ep2 Attack of the clones", "Ep3 Revenge of the Sith"];
-					list.forEach(
-						obj => obj.name = FilmName[parseInt(obj.uid)-1]
-					);
+					list.forEach(obj => obj.name = FilmName[parseInt(obj.uid)-1]);
 				}
+				list.forEach( obj => obj.resource = resource );
 				setStore({
 					[resource]: list
+				});
+			},
+
+			addFavorite: (item) =>{
+				const store = getStore();
+				setStore({
+					favorites: [...store.favorites, item]
+				});
+			},
+			
+			removeFavorite: (index) =>{
+				const store = getStore ();
+				let list = store.favorites;
+				list.splice(index, 1);
+				setStore({
+					favorites: [...list]
 				});
 			}
 		}

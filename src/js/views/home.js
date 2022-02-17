@@ -1,15 +1,11 @@
-import React from 'react';
-import { useHistory } from "react-router-dom";
-import { useContext } from 'react/cjs/react.development';
+import React, { useContext } from 'react';
 import "../../styles/home.css";
 import { Card } from "../component/Card";
 import { Title } from "../component/Title";
 import { Context } from "../store/appContext";
 
 export const Home = () => {
-	const history = useHistory();
 	const context = useContext(Context);
-
 
 	return (
 		<div className="container text-left mt-5">

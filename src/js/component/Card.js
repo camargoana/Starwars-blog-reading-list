@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useContext} from "react";
+import { Context } from "../store/appContext";
 import propTypes from "prop-types";
 import img600x400 from "../../img/600x400.jpg"
 import img400x400 from "../../img/400x400.jpg"
 
-function prueba(name){
+function like(name,item,actions){
   const targetOff = "#"+name+"_off";
   const targetOn = "#"+name+"_on";
 
-  console.log(targetOff);
+  console.log(item);
+
   document.querySelector(targetOff).classList.add('d-none');
   document.querySelector(targetOn).classList.remove('d-none');
+  actions.addFavorite(item);
 }
 
 export const Card = ({ item, resource }) => {
+  const { store, actions } = useContext(Context);
   const imgResource = resource==="people"?"characters":resource;
-
-  
 
   return (
     <div className="card my-3 mx-3 p-0" style={{ width: "18rem" }}>
@@ -42,7 +44,7 @@ export const Card = ({ item, resource }) => {
         
       <div className="card-footer border-0 bg-white">
         <a href={`/${resource}/${item.uid}`} className="btn btn-outline-primary">Learn more!</a>
-        <a id={`${resource}_${item.uid}_off`} className="btn btn-outline-warning float-end " onClick={(e) => prueba(`${resource}_${item.uid}`)} >
+        <a id={`${resource}_${item.uid}_off`} className="btn btn-outline-warning float-end " onClick={(e) => like(`${resource}_${item.uid}`, item, actions)} >
           <i className= "far fa-heart"></i>
         </a>
         <a id={`${resource}_${item.uid}_on`} className="btn btn-outline-warning float-end d-none">
@@ -57,6 +59,4 @@ export const Card = ({ item, resource }) => {
 Card.propTypes = {
   item: propTypes.object,
   resource: propTypes.oneOf(["films", "people", "starships", "vehicles", "species", "planets"])
-
-
 };

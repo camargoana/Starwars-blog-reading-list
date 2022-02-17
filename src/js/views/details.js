@@ -6,8 +6,6 @@ import img600x400 from "../../img/600x400.jpg"
 import img400x400 from "../../img/400x400.jpg"
 
 export const Details = (props) => {
-	//const history = useHistory();
-	const context = useContext(Context);
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
@@ -32,7 +30,6 @@ export const Details = (props) => {
 	const infoValue = mapValue[params.resource];
 	const imgResource = params.resource==="people"?"characters":params.resource;
 
-	console.log(params);
 	useEffect(() => {
 		if (params.resource && params.id) {
 			const detailsResource = params.resource;
