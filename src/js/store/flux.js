@@ -53,13 +53,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					, "Ep2 Attack of the clones", "Ep3 Revenge of the Sith"];
 					list.forEach(obj => obj.name = FilmName[parseInt(obj.uid)-1]);
 				}
-				list.forEach( obj => obj.resource = resource );
+				list.forEach( function(obj){
+					obj.resource = resource;
+					obj.favorite = false;
+				});
 				setStore({
 					[resource]: list
 				});
 			},
 
 			addFavorite: (item) =>{
+				item.favorite = true;
 				const store = getStore();
 				setStore({
 					favorites: [...store.favorites, item]
@@ -69,6 +73,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			removeFavorite: (index) =>{
 				const store = getStore ();
 				let list = store.favorites;
+				list[index].favorite = false;
 				list.splice(index, 1);
 				setStore({
 					favorites: [...list]

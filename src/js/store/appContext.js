@@ -31,6 +31,7 @@ const injectContext = PassedComponent => {
 			 * state.actions.loadSomeData(); <---- calling this function from the flux.js actions
 			 *
 			 **/
+			console.log("RUNNING ONLOAD ONLY ONES");
 			["films", "people", "starships", "vehicles", "species","planets"].forEach(
 				resource => state.actions.getItems(resource)
 			);
